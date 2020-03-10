@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Git Workflow:
     How to use Branches{
         Master > Master branche is the mainbranche of the project. You may only merge a feature branche when you feature works propperly. Master branche may not include testfiles.
@@ -7,3 +8,7 @@ Git Workflow:
 
     Succes!
     
+=======
+hoi
+wereld
+>>>>>>> 8ee4f20ff55573ba914d9a69ee15f8a981d38aa6
