@@ -1,4 +1,5 @@
-var x, i, j, selElmnt, a, b, c;
+function runStyleAutomation() {
+  var x, i, j, selElmnt, a, b, c;
 /* Look for any elements with the class "custom-select": */
 x = document.getElementsByClassName("custom-select");
 for (i = 0; i < x.length; i++) {
@@ -73,3 +74,4 @@ function closeAllSelect(elmnt) {
 then close all select boxes: */
 document.addEventListener("click", closeAllSelect);
 
+}
