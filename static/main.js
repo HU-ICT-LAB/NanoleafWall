@@ -1,3 +1,4 @@
+//Onlane mode
 function sturen() {
   fetch("http://127.0.0.1:5000/effecten")
     .then(response => {
@@ -8,24 +9,54 @@ function sturen() {
       console.log("GET response json:");
       console.log(json);
       var LijstVanArray = json;
-      console.log(LijstVanArray);
-      var LengteVanArray = LijstVanArray.length;
-      console.log(LengteVanArray);
-      var i;
-      var j;
+      LijstVanArray.forEach(optionVuller);
 
-      for (i = 1; i < LengteVanArray + 1; i++) {
-        var IDieNietBegintBijEen = i - 1;
-        console.log(LijstVanArray[IDieNietBegintBijEen]);
-        var woord = LijstVanArray[IDieNietBegintBijEen]
-        console.log(
-            document.getElementById(i.toString()))
-        document.getElementById(i.toString()).innerHTML = woord;
+      function optionVuller(item, index) {
+        var node = document.createElement("OPTION");
+        var textnode = document.createTextNode(item);
+        node.appendChild(textnode);
+        document.getElementById("select1").appendChild(node);
       }
-      runStyleAutomation()
+      runStyleAutomation();
     });
 }
-sturen()
+
+// //localmode
+// function sturen() {
+//   var LijstVanArray = [
+//     "Color Burst",
+//     "Falling Whites",
+//     "Fireworks",
+//     "Flames",
+//     "Forest",
+//     "Inner Peace",
+//     "Meteor Shower",
+//     "Nemo",
+//     "Northern Lights",
+//     "Paint Splatter",
+//     "Pulse PopBeats",
+//     "Radial Sound Bar",
+//     "Rhythmic Northern Lights",
+//     "Romantic",
+//     "Sound Bar",
+//     "Streaking Notes"
+//   ];
+//   // hierboven hoort normaal "json"
+
+//   LijstVanArray.forEach(optionVuller);
+
+//   function optionVuller(item, index) {
+//     var node = document.createElement("OPTION");
+//     var textnode = document.createTextNode(item);
+//     node.appendChild(textnode);
+//     document.getElementById("select1").appendChild(node);
+//   }
+
+//   runStyleAutomation();
+// }
+
+sturen();
+
 function KnopjeGedrukt() {
   var dropdown = document.getElementById("select1");
   var dropdownvalue = dropdown.options[dropdown.selectedIndex].text;
