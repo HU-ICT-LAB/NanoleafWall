@@ -2,58 +2,35 @@
 <html>
   <header>
     <title>DesktopEffectenMenu</title>
-    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="stylesheet" type="text/css" href="/static/style.css" />
   </header>
+
   <body>
     <div id="part1">
-      <img id="img1" src="/img/kleinerimg1p3.png" />
+      <img id="img1" src="img/kleinerimg1p3.png" />
       <h1>Leafgreen</h1>
       <h2>Effecten Menu</h2>
     </div>
+
     <div id="part2">
-        <div class="custom-select" id="dropdownholder" style="width:290px;">
-          <select id="select1">
-            <option selected:disabled>Selecteer ef</option>
-            <option id="1"></option>
-            <option id="2"></option>
-            <option id="3"></option>
-            <option id="4"></option>
-            <option id="5"></option>
-            <option id="6"></option>
-            <option id="7"></option>
-            <option id="8"></option>
-            <option id="9"></option>
-            <option id="10"></option>
-            <option id="11"></option>
-            <option id="12"></option>
-            <option id="13"></option>
-            <option id="14"></option>
-            <option id="15"></option>
-            <option id="16"></option>
-            <option id="17"></option>
-            <option id="18"></option>
-            <option id="19"></option>
-            <option id="20"></option>
-            <option id="21"></option>
-            <option id="22"></option>
-            <option id="23"></option>
-            <option id="24"></option>
-            <option id="25"></option>
-            <option id="26"></option>
-            <option id="27"></option>
-            <option id="28"></option>
-            <option id="29"></option>
-          </select>
-        </div>
-        <br />
-        <div id="buttonholder">
+      <div class="custom-select" id="dropdownholder" style="width:290px;">
+        <select id="select1">
+          <option selected:disabled>Selecteer effect</option>
+          <!-- The Javascript fills the dropdown automaticaly -->
+        </select>
+      </div>
+      <br />
+      <div id="buttonholder">
         <button id="confirm" onclick="KnopjeGedrukt()">Bevestigen</button>
-        </div>
+      </div>
     </div>
+
     <div id="part3">
-            <img src="img/Nanoleafs2@2x.png"id="img1">
-        </div>
-    <script src="/styleautomation.js"></script>
+      <img src="img/Nanoleafs2@2x.png" id="img1" />
+    </div>
+
+    <script src="styleautomation.js"></script>
     <script src="main.js"></script>
+    
   </body>
 </html>
