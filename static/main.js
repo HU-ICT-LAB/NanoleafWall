@@ -1,56 +1,57 @@
-//Onlane mode
-function sturen() {
-  fetch("http://127.0.0.1:5000/effecten")
-    .then(response => {
-      return response.json();
-    })
-    .then(json => {
-      var LijstVanArray = json;
-      LijstVanArray.forEach(optionVuller);
-
-      function optionVuller(item, index) {
-        var node = document.createElement("OPTION");
-        var textnode = document.createTextNode(item);
-        node.appendChild(textnode);
-        document.getElementById("select1").appendChild(node);
-      }
-      runStyleAutomation();
-    });
-}
-
-// //localmode
+// //Onlane mode
 // function sturen() {
-//   var LijstVanArray = [
-//     "Color Burst",
-//     "Falling Whites",
-//     "Fireworks",
-//     "Flames",
-//     "Forest",
-//     "Inner Peace",
-//     "Meteor Shower",
-//     "Nemo",
-//     "Northern Lights",
-//     "Paint Splatter",
-//     "Pulse PopBeats",
-//     "Radial Sound Bar",
-//     "Rhythmic Northern Lights",
-//     "Romantic",
-//     "Sound Bar",
-//     "Streaking Notes"
-//   ];
-//   // hierboven hoort normaal "json"
+//   fetch("http://127.0.0.1:5000/effecten")
+//     .then(response => {
+//       return response.json();
+//     })
+//     .then(json => {
+//       var LijstVanArray = json;
+//       LijstVanArray.forEach(optionVuller);
 
-//   LijstVanArray.forEach(optionVuller);
-
-//   function optionVuller(item, index) {
-//     var node = document.createElement("OPTION");
-//     var textnode = document.createTextNode(item);
-//     node.appendChild(textnode);
-//     document.getElementById("select1").appendChild(node);
-//   }
-
-//   runStyleAutomation();
+//       function optionVuller(item, index) {
+//         var node = document.createElement("OPTION");
+//         var textnode = document.createTextNode(item);
+//         node.appendChild(textnode);
+//         document.getElementById("select1").appendChild(node);
+//       }
+//       runStyleAutomation();
+//     });
 // }
+
+//localmode
+function sturen() {
+  var LijstVanArray = [
+    "Color Burst",
+    "Falling Whites",
+    "Fireworks",
+    "Flames",
+    "Forest",
+    "Inner Peace",
+    "Meteor Shower",
+    "Nemo",
+    "Northern Lights",
+    "Paint Splatter",
+    "Pulse PopBeats",
+    "Radial Sound Bar",
+    "Rhythmic Northern Lights",
+    "Romantic",
+    "Sound Bar",
+    "Sound Bar2",
+    "Streaking Notes"
+  ];
+  // hierboven hoort normaal "json"
+
+  LijstVanArray.forEach(optionVuller);
+
+  function optionVuller(item, index) {
+    var node = document.createElement("OPTION");
+    var textnode = document.createTextNode(item);
+    node.appendChild(textnode);
+    document.getElementById("select1").appendChild(node);
+  }
+
+  runStyleAutomation();
+}
 
 sturen();
 
