@@ -21,7 +21,3 @@ nl.set_effect(effects[0])
 
 y = nl.get_current_effect()
 print (y)
-
-@app.route("/effecten" , methods = ["get"])
-def effect_option():
-	return print (x)
