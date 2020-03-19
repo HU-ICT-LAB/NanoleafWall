@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+   <head>
+      <title>Nano Templates</title>
+   </head>
+
+   <style type="text/css">
+
+      th:tr{
+         color: blue;
+
+      }
+
+      tr:nth-of-type(2n){
+         border: 1px solid black;
+         
+      }
+
+      td{
+         padding: 8px 8px;
+         border: 1px solid black;
+      }
+
+   </style>
+   <body>
+      <table style="margin-left: 20px;">
+         
+         {%for mainIndex in range(0,len)%}
+         <tr>   
+            {%for sideIndex in Numbers%}  
+               <td>{{sideIndex[mainIndex]}}</td>
+
+               {%endfor%}
+            {%endfor%}
+         </tr>
+      
+      </table>
+
+      
+   </body>
+</html>
