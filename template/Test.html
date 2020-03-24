@@ -28,11 +28,10 @@
          {%for mainIndex in range(0,len)%}
          <tr>   
             {%for sideIndex in Numbers%}  
-               <td>{{sideIndex[mainIndex]}}</td>
-
-               {%endfor%}
+               <td class= "nanoleafs">{{sideIndex[mainIndex]}}</td>
             {%endfor%}
          </tr>
+         {%endfor%}
       
       </table>
 
