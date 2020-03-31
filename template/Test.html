@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+   <head>
+      <title>Nano Templates</title>
+   </head>
+
+   <style type="text/css">
+      td{
+         padding: 8px 8px;
+         border: 1px solid black;
+      }
+
+   </style>
+   <body>
+      
+      <button type="button" onclick="loadgame()">Play Wack a mole</button>
+      
+      <table style="margin-left: 20px;">
+         
+         {%for mainIndex in range(0,len)%}
+         <tr>   
+            {%for sideIndex in Numbers%}  
+               <td class= "nanoleafs">{{sideIndex[mainIndex]}}</td>
+            {%endfor%}
+         </tr>
+         {%endfor%}
+      
+      </table>
+
+      <script>
+         function loadgame() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange=function() {
+               if (this.readyState == 4 && this.status == 200) {
+                  document.getElementsByClassName("nanoleafs").innerHTML = this.responseText;
+               }
+            };
+            xhttp.open("GET", "Test_nenoleafs.py", true);
+            xhttp.send();
+
+            fetch(`${window.origin}/Wack_a_mol`, {
+               method: "post",
+               credentials: "include",
+               body: JSON.stringify(loadgame),
+               cache: "no-cache",
+            })
+
+         .then(function (response){
+
+            if (response.status !== 200) {
+               console.log(`Response status was not 200: ${response.status}`)
+               return ;
+            }
+
+            response.json().then(function (data) {
+               console.log(data)
+            })
+         })
+      }
+      </script>
+
+
+   </body>
+</html>
