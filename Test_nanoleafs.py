@@ -23,7 +23,12 @@ randomMole()
 
 @app.route('/', methods=["GET"])
 def index():
-    j = randomMole()
+    i = 0
+    while (i < 90):
+        sleep(1)
+        j = randomMole()
+        i += 1
+        
     return render_template("Test.html", len = 17, Numbers = Numbers, j = j)
 
 
