@@ -1,64 +1,88 @@
 <!doctype html>
 <html>
-   <head>
-      <title>Nano Templates</title>
-   </head>
 
-   <style type="text/css">
-      td{
-         padding: 8px 8px;
-         border: 1px solid black;
-      }
+<head>
+   <title>Nano Templates</title>
+</head>
 
-   </style>
-   <body>
-      
-      <button type="button" onclick="loadgame()">Play Wack a mole</button>
-      
-      <table style="margin-left: 20px;">
-         
-         {%for mainIndex in range(0,len)%}
-         <tr>   
-            {%for sideIndex in Numbers%}  
-               <td class= "nanoleafs">{{sideIndex[mainIndex]}}</td>
-            {%endfor%}
-         </tr>
+<style type="text/css">
+   td {
+      padding: 8px 8px;
+      border: 1px solid black;
+   }
+
+   .nanoleafs1 {
+      background-color: white;
+   }
+
+   .nanoleafs2 {
+      background-color: green;
+   }
+</style>
+
+<body>
+
+   <button type="button" onclick="loadgame()">Play Wack a mole</button>
+  
+   <table style="margin-left: 20px;">
+
+      {%for mainIndex in range(0,len)%}
+         {%for sideIndex in Numbers%}
+         <td class="nanoleafs1" id="{{sideIndex[mainIndex]}}">{{sideIndex[mainIndex]}}</td>
          {%endfor%}
-      
-      </table>
+      </tr>
+      {%endfor%}
 
-      <script>
-         function loadgame() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange=function() {
-               if (this.readyState == 4 && this.status == 200) {
-                  document.getElementsByClassName("nanoleafs").innerHTML = this.responseText;
-               }
-            };
-            xhttp.open("GET", "Test_nenoleafs.py", true);
-            xhttp.send();
+   </table>
 
-            fetch(`${window.origin}/Wack_a_mol`, {
-               method: "post",
-               credentials: "include",
-               body: JSON.stringify(loadgame),
-               cache: "no-cache",
-            })
+   <script>
 
-         .then(function (response){
+         function loadgame(){
+         var elm = '{{j|tojson}}';
+         console.log(elm);
 
-            if (response.status !== 200) {
-               console.log(`Response status was not 200: ${response.status}`)
-               return ;
+         var element = document.getElementById('{{j}}');
+         element.classList.add("nanoleafs2");
+         setTimeout(()=> {
+         element.classList.remove("nanoleafs2")
+         }, 3000);
+
+
+         var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+   
+               document.getElementsByClassName("nanoleafs1").innerHTML = this.responseText;
             }
+         };
+         xhttp.open("GET", "Test_nenoleafs.py", true);
+         xhttp.send();
 
-            response.json().then(function (data) {
-               console.log(data)
-            })
+
+         fetch(`${window.origin}/Wack_a_mol`, {
+            method: "post",
+            credentials: "include",
+            body: JSON.stringify(loadgame),
+            cache: "no-cache",
          })
-      }
-      </script>
+
+            .then(function (response) {
+
+               if (response.status !== 200) {
+                  console.log(`Response status was not 200: ${response.status}`)
+                  return;
+               }
+
+               response.json().then(function (data) {
+                  console.log(data)
+               })
+            })
+         }
+      
+
+   </script>
 
 
-   </body>
+</body>
+
 </html>
