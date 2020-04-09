@@ -23,6 +23,7 @@
 <body>
 
    <button type="button" onclick="loadgame()">Play Wack a mole</button>
+<<<<<<< HEAD
 
    <table style="margin-left: 20px;">
 
@@ -30,12 +31,22 @@
       {%for sideIndex in Numbers%}
       <td class="nanoleafs1" id="{{sideIndex[mainIndex]}}">{{sideIndex[mainIndex]}}</td>
       {%endfor%}
+=======
+  
+   <table style="margin-left: 20px;">
+
+      {%for mainIndex in range(0,len)%}
+         {%for sideIndex in Numbers%}
+         <td class="nanoleafs1" id="{{sideIndex[mainIndex]}}">{{sideIndex[mainIndex]}}</td>
+         {%endfor%}
+>>>>>>> 9fcfdd33f0165fd9c1699ccb25174b942786e68f
       </tr>
       {%endfor%}
 
    </table>
 
    <script>
+<<<<<<< HEAD
       var holes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
          "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34",
          "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51",
@@ -85,12 +96,28 @@
          // setTimeout(()=> {
          // element.classList.remove("nanoleafs2")
          // }, 3000);
+=======
+
+         function loadgame(){
+         var elm = '{{j|tojson}}';
+         console.log(elm);
+
+         var element = document.getElementById('{{j}}');
+         element.classList.add("nanoleafs2");
+         setTimeout(()=> {
+         element.classList.remove("nanoleafs2")
+         }, 3000);
+>>>>>>> 9fcfdd33f0165fd9c1699ccb25174b942786e68f
 
 
          var xhttp = new XMLHttpRequest();
          xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+<<<<<<< HEAD
 
+=======
+   
+>>>>>>> 9fcfdd33f0165fd9c1699ccb25174b942786e68f
                document.getElementsByClassName("nanoleafs1").innerHTML = this.responseText;
             }
          };
@@ -116,8 +143,14 @@
                   console.log(data)
                })
             })
+<<<<<<< HEAD
 
       }
+=======
+         }
+      
+
+>>>>>>> 9fcfdd33f0165fd9c1699ccb25174b942786e68f
    </script>
 
 

@@ -12,6 +12,7 @@ Numbers = [["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","1
 ["86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102"]]
 
 
+<<<<<<< HEAD
 @app.route('/', methods=["GET"])
 def index():
     # i = 0
@@ -21,6 +22,26 @@ def index():
     
     
     return render_template("Test.html", len = 17, Numbers = Numbers)
+=======
+def randomMole():
+    j = "0"
+    for D in range(0, 17):
+        for k in Numbers:
+            j = random.choice(k)
+    
+    return j
+randomMole()
+
+@app.route('/', methods=["GET"])
+def index():
+    i = 0
+    while (i < 90):
+        sleep(1)
+        j = randomMole()
+        i += 1
+        
+    return render_template("Test.html", len = 17, Numbers = Numbers, j = j)
+>>>>>>> 9fcfdd33f0165fd9c1699ccb25174b942786e68f
 
 
 if __name__== "__main__":
