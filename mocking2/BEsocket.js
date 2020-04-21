@@ -1,3 +1,4 @@
+
 var lastColorCode = "";
 
 function loadKey() {
