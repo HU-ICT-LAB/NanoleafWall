@@ -70,6 +70,10 @@ app.get("/level1", function (req, res) {
     });
 });
 
+function random(scope){
+    return Math.floor(Math.random() * scope).toString();
+}
+
 function firstSetMoles() {
     var totalpanels;
     var anidata = "103 ";
@@ -102,10 +106,21 @@ app.post("/levelContinuation", function (request, res) {
     var oldColors = request.body.colorstring;
     
     var numberOfTouchedTile = touchedTile.replace("tile", "");
-    var TouchedTileData = numberOfTouchedTile + " 1 105 0 0 200";
-    var NewTouchedTileData = numberOfTouchedTile + " 1 0 255 0 200";
+    var TouchedTileData = numberOfTouchedTile + " 1 105 0 0 0 200";
+    var NewTouchedTileData = numberOfTouchedTile + " 1 0 255 0 0 200";
+    var oldColors = oldColors.toString();
     var newColor = oldColors.replace(NewTouchedTileData, TouchedTileData);
-    console.log(NewTouchedTileData + TouchedTileData + oldColors + newColor);
+
+    //make new tile
+    var NewTile = random(102);
+    var NewTouchableTileGreen = NewTile + " 1 0 255 0 0 200";
+    var NewTouchableTileRed = NewTile + " 1 105 0 0 0 200";
+    var newColor = newColor.replace(NewTouchableTileRed, NewTouchableTileGreen);
+    
+    console.log("1" + NewTouchedTileData);
+    console.log("2" + TouchedTileData);
+    console.log(newColor);
+    console.log(oldColors);
     res.send({
     "command": "display/add",
     "animType": "static",
