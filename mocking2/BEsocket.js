@@ -1,18 +1,6 @@
 
 var lastColorCode = "";
 
-function loadKey() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      // console.log(this.responseText);
-    }
-  };
-  xhttp.open("GET", "http://localhost:3000/authkey", true);
-  xhttp.send();
-}
-
-
 function colorProccesor(dict) {
   var stringOfColors = dict.toString();
   var arrayOfColors = stringOfColors.split(" ");
@@ -53,22 +41,6 @@ function colorProccesoralreadystring(dict) {
   }
 }
 
-function Start() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      // console.log(this.responseText);
-      var dict = JSON.parse(this.responseText);
-      // console.log(dict)
-      var lastColorCode = dict["animData"]
-      // console.log(lastColorCode);
-      colorProccesor(lastColorCode);
-    }
-  };
-  xhttp.open("GET", "http://localhost:3000/level1", true);
-  xhttp.send();
-}
-
 function getColorstring() {
   var ColorStringToSendBack = "102 ";
   var AllTile;
@@ -107,12 +79,11 @@ function ClickEvent(tile) {
   var colorstring = "colorstring=" + getColorstring();
   console.log(getColorstring());
   var dataTouchedTile = "data=" + tile + "&" + colorstring;
-  xhttp.open("POST", "http://localhost:3000/levelContinuation", true);
+  xhttp.open("POST", "http://nanoleaf.nandhoman.nl:3000/levelContinuation", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(dataTouchedTile);
 }
 
-//Oficial part
 var oldColorString = "hoi";
 function updateCurrentColorString() {
   ThisColorString = getColorstring();
@@ -125,7 +96,7 @@ function updateCurrentColorString() {
   var colorstring = "colorstring=" + getColorstring();
   console.log(getColorstring());
   var ColorstringFor1BE = colorstring;
-  xhttp.open("Post", "http://localhost:3000/currentColorStringFormFE", true);
+  xhttp.open("Post", "http://nanoleaf.nandhoman.nl:3000/currentColorStringFormFE", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(ColorstringFor1BE);
   oldColorString = getColorstring();
@@ -154,33 +125,29 @@ function SingleClickEvent(tile) {
     if (this.readyState == 4 && this.status == 200) { }
   };
   var dataTouchedTile = "data=" + tile;
-  xhttp.open("POST", "http://localhost:3000/singleClickEvent", true);
+  xhttp.open("POST", "http://nanoleaf.nandhoman.nl/singleClickEvent", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(dataTouchedTile);
 }
 
 function getNewColorString() {
-  console.log("function started")
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-            // console.log(this.responseText);
-            var dict = JSON.parse(this.responseText);
-            // console.log(dict)
-            var lastColorCode = dict["animData"]
-            console.log(lastColorCode);
-            colorProccesor(lastColorCode);
-            console.log("heyy");
+      console.log(this.responseText);
+      var dict = JSON.parse(this.responseText);
+      // console.log(dict["animData"])
+      var lastColorCode = dict["animData"];
+      // console.log(lastColorCode);
+      colorProccesoralreadystring(lastColorCode);
     }
   };
-  console.log("heyy");
-  xhttp.open("get", "http://localhost:3000/PostNewColorString", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.open("GET", "http://nanoleaf.nandhoman.nl/:3000/PostNewColorString", true);
+  xhttp.send();
+  updateCurrentColorString();
 }
 
-
-// //autoupdate
 setAllWhite();
 updateCurrentColorString();
 
-setInterval(getNewColorString(), 20);
+setInterval(getNewColorString, 200);
