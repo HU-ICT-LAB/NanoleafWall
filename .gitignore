@@ -1,3 +1,5 @@
 heightsensor/node_modules
 .vscode/
 mocking2be/node_modules
+mocking2be/pyg.js
+mocking2be/generatecolorstring.js
