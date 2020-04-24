@@ -27,6 +27,6 @@ for (totalTile = 1; totalTile < (rows * columns + 1); totalTile++){
     var tileNumberId = "tile" + totalTile;
     var changeAbleDocument = document.getElementById(tileNumberId);
     changeAbleDocument.setAttribute("class", "AllTileClass");
-    var clickEvent = "clickEvent('" + tileNumberId + "')";
-    changeAbleDocument.setAttribute("onclick", clickEvent)
+    var SingleclickEvent = "SingleClickEvent('" + tileNumberId + "')";
+    changeAbleDocument.setAttribute("onclick", SingleclickEvent);
 }

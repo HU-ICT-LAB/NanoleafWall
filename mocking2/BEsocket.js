@@ -1,3 +1,4 @@
+
 var lastColorCode = "";
 
 function loadKey() {
@@ -51,6 +52,7 @@ function colorProccesoralreadystring(dict) {
     PanelInHtml.style.backgroundColor = RGBcolorInString;
   }
 }
+
 function Start() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
@@ -89,7 +91,7 @@ function getColorstring() {
   return ColorStringToSendBack
 }
 
-function clickEvent(tile) {
+function ClickEvent(tile) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -110,4 +112,75 @@ function clickEvent(tile) {
   xhttp.send(dataTouchedTile);
 }
 
-Start();
+//Oficial part
+var oldColorString = "hoi";
+function updateCurrentColorString() {
+  ThisColorString = getColorstring();
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) { };
+  }
+  console.log("started Update Current Colorstring");
+
+  var colorstring = "colorstring=" + getColorstring();
+  console.log(getColorstring());
+  var ColorstringFor1BE = colorstring;
+  xhttp.open("Post", "http://localhost:3000/currentColorStringFormFE", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send(ColorstringFor1BE);
+  oldColorString = getColorstring();
+};
+
+var TileNumber;
+
+function setAllWhite() {
+  for (TileNumber = 1; TileNumber < (rows * columns) + 1; TileNumber++) {
+    var tile = TileNumber;
+    var red = "255";
+    var green = "255";
+    var blue = "255";
+    var white = "0";
+    var time = "1";
+    var tileName = "tile" + tile;
+    var PanelInHtml = document.getElementById(tileName);
+    var RGBcolorInString = "rgb(" + red + ", " + green + ", " + blue + ")";
+    PanelInHtml.style.backgroundColor = RGBcolorInString;
+  }
+}
+
+function SingleClickEvent(tile) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) { }
+  };
+  var dataTouchedTile = "data=" + tile;
+  xhttp.open("POST", "http://localhost:3000/singleClickEvent", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send(dataTouchedTile);
+}
+
+function getNewColorString() {
+  console.log("function started")
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+            // console.log(this.responseText);
+            var dict = JSON.parse(this.responseText);
+            // console.log(dict)
+            var lastColorCode = dict["animData"]
+            console.log(lastColorCode);
+            colorProccesor(lastColorCode);
+            console.log("heyy");
+    }
+  };
+  console.log("heyy");
+  xhttp.open("get", "http://localhost:3000/PostNewColorString", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+}
+
+
+// //autoupdate
+setAllWhite();
+updateCurrentColorString();
+
+setInterval(getNewColorString(), 20);

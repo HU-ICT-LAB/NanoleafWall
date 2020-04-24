@@ -28,7 +28,7 @@ function authkey() {
     return key;
 }
 
-function generatecolorstring(){
+function generatecolorstring() {
     var totalpanels;
     var anidata = totalNumberOfPanels + " ";
 
@@ -42,7 +42,7 @@ function generatecolorstring(){
         var role7 = "200 ";
         anidata = anidata + role1 + role2 + role3 + role4 + role5 + role6 + role7;
     }
-return anidata
+    return anidata
 }
 
 app.get("/authkey", function (req, res) {
@@ -70,7 +70,7 @@ app.get("/level1", function (req, res) {
     });
 });
 
-function random(scope){
+function random(scope) {
     return Math.floor(Math.random() * scope).toString();
 }
 
@@ -89,7 +89,7 @@ function firstSetMoles() {
         anidata = anidata + role1 + role2 + role3 + role4 + role5 + role6 + role7;
     }
     var TimesMoleParTime = 1;
-    for (TimesMoleParTime = 1; TimesMoleParTime < 4; TimesMoleParTime++){
+    for (TimesMoleParTime = 1; TimesMoleParTime < 4; TimesMoleParTime++) {
         var TempTileNumber = Math.floor(Math.random() * totalNumberOfPanels);
         var OldTileRed = TempTileNumber + " 1 105 0 0 0 200";
         console.log(OldTileRed);
@@ -98,13 +98,13 @@ function firstSetMoles() {
         anidata = anidata.toString();
         anidata = anidata.replace(OldTileRed, MakeTileGreen);
     }
-return anidata
+    return anidata
 }
 
 app.post("/levelContinuation", function (request, res) {
     var touchedTile = request.body.data;
     var oldColors = request.body.colorstring;
-    
+
     var numberOfTouchedTile = touchedTile.replace("tile", "");
     var TouchedTileData = numberOfTouchedTile + " 1 105 0 0 0 200";
     var NewTouchedTileData = numberOfTouchedTile + " 1 0 255 0 0 200";
@@ -116,17 +116,107 @@ app.post("/levelContinuation", function (request, res) {
     var NewTouchableTileGreen = NewTile + " 1 0 255 0 0 200";
     var NewTouchableTileRed = NewTile + " 1 105 0 0 0 200";
     var newColor = newColor.replace(NewTouchableTileRed, NewTouchableTileGreen);
-    
+
     console.log("1" + NewTouchedTileData);
     console.log("2" + TouchedTileData);
     console.log(newColor);
     console.log(oldColors);
     res.send({
-    "command": "display/add",
-    "animType": "static",
-    "animData": newColor,
-    "loop": false
+        "command": "display/add",
+        "animType": "static",
+        "animData": newColor,
+        "loop": false
     })
+});
+
+// Offical Features to FE
+var ColorstringFromFE;
+var ClickedTileArray = ["000"];
+
+app.post("/currentColorStringFormFE", function (request, res) {
+    console.log(request.body)
+    ColorstringFromFE = request.body.colorstring;
+    console.log(ColorstringFromFE)
+    res.send("done")
+});
+
+app.post("/singleClickEvent", function (request, res) {
+    console.log("djkal");
+    var touchedTile = request.body.data;
+    res.send("Single Click Event Transmitted");
+    console.log(touchedTile);
+    touchedTile = touchedTile.replace("tile", "");
+    console.log(touchedTile);
+    if (ClickedTileArray[0] == "000") {
+        ClickedTileArray[0] = touchedTile;
+        console.log(ClickedTileArray);
+    }
+    else {
+        ClickedTileArray.push(touchedTile);
+        console.log(ClickedTileArray);
+    }
+});
+
+
+app.get("/PostNewColorString", function (req, res) {
+        res.send(
+            {
+                "command": "display/add",
+                "animType": "static",
+                "animData": colorString,
+                "loop": false
+            }
+        )
+    });
+
+function range(start, end) {
+    var ans = [];
+    for (let i = start; i <= end; i++) {
+        ans.push(i);
+    }
+    return ans;
+}
+
+// Offical Endpoints
+app.get("/currentColorString", function (req, res) {
+    res.send(
+        {
+            "command": "display/add",
+            "animType": "static",
+            "animData": ColorstringFromFE,
+            "loop": false
+        }
+    )
+});
+
+app.get("/lastTouchedTiles", function (req, res) {
+    var TileNumbers;
+    console.log(ClickedTileArray);
+    if (ClickedTileArray.length == 1) {
+        var tempTileName = ClickedTileArray[0];
+        var ArrayOfEvents = [{ "gesture": 0, "panelId": tempTileName}];
+    }
+    else {
+        var tempTileName = ClickedTileArray[0].toString();
+        var ArrayOfEvents = [{ "gesture": 0, "panelId": tempTileName }];
+        for (TileNumbers = 1; TileNumbers < ClickedTileArray.length; TileNumbers++) {
+            var SmallTouchDict = { "gesture": 0, "panelId": ClickedTileArray[TileNumbers] };
+            ArrayOfEvents.push(SmallTouchDict);
+        }
+    }
+    res.send(
+        {
+            "events": ArrayOfEvents
+        }
+    )
+    ClickedTileArray = [];
+});
+
+app.post("/colorString", function (req, res) {
+    console.log("function started");
+    var PostedColorstring = req.body.animData;
+    console.log(PostedColorstring);
+    res.send("Done.");
 });
 
 
