@@ -160,22 +160,19 @@ function SingleClickEvent(tile) {
 }
 
 function getNewColorString() {
-  console.log("function started")
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-            // console.log(this.responseText);
-            var dict = JSON.parse(this.responseText);
-            // console.log(dict)
-            var lastColorCode = dict["animData"]
-            console.log(lastColorCode);
-            colorProccesor(lastColorCode);
-            console.log("heyy");
+      console.log(this.responseText);
+      var dict = JSON.parse(this.responseText);
+      // console.log(dict["animData"])
+      var lastColorCode = dict["animData"];
+      // console.log(lastColorCode);
+      colorProccesoralreadystring(lastColorCode);
     }
   };
-  console.log("heyy");
-  xhttp.open("get", "http://localhost:3000/PostNewColorString", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.open("GET", "http://localhost:3000/PostNewColorString", true);
+  xhttp.send();
 }
 
 
@@ -183,4 +180,4 @@ function getNewColorString() {
 setAllWhite();
 updateCurrentColorString();
 
-setInterval(getNewColorString(), 20);
+setInterval(getNewColorString, 200);

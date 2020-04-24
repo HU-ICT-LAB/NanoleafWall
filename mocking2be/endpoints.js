@@ -132,6 +132,7 @@ app.post("/levelContinuation", function (request, res) {
 // Offical Features to FE
 var ColorstringFromFE;
 var ClickedTileArray = ["000"];
+var PostedColorstring;
 
 app.post("/currentColorStringFormFE", function (request, res) {
     console.log(request.body)
@@ -163,7 +164,7 @@ app.get("/PostNewColorString", function (req, res) {
             {
                 "command": "display/add",
                 "animType": "static",
-                "animData": colorString,
+                "animData": PostedColorstring,
                 "loop": false
             }
         )
@@ -214,7 +215,7 @@ app.get("/lastTouchedTiles", function (req, res) {
 
 app.post("/colorString", function (req, res) {
     console.log("function started");
-    var PostedColorstring = req.body.animData;
+    PostedColorstring = req.body.animData;
     console.log(PostedColorstring);
     res.send("Done.");
 });
