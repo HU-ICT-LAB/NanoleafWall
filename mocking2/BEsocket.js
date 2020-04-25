@@ -1,3 +1,5 @@
+// Copyright Nand Homan, 2020 > Nandhoman.nl
+
 var lastColorCode = "";
 
 function colorProccesor(dict) {

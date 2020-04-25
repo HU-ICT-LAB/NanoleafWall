@@ -1,3 +1,5 @@
+// Copyright Nand Homan, 2020 > Nandhoman.nl
+
 var rows = 17;
 var columns = 6;
 var table = document.getElementById("table");

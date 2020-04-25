@@ -1,3 +1,5 @@
+// Copyright Nand Homan, 2020 > Nandhoman.nl
+
 var bodyParser = require('body-parser');
 //npm install body-parser
 var http = require("http");
