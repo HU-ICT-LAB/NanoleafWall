@@ -92,10 +92,6 @@ app.post("/levelContinuation", function (request, res) {
 var ColorstringFromFE;
 var ClickedTileArray = ["000"];
 var PostedColorstring;
-<<<<<<< HEAD
-=======
-
->>>>>>> ClearTheApi
 app.post("/currentColorStringFormFE", function (request, res) {
     ColorstringFromFE = request.body.colorstring;
     res.send("done")
@@ -118,7 +114,6 @@ app.post("/singleClickEvent", function (request, res) {
 
 
 app.get("/PostNewColorString", function (req, res) {
-<<<<<<< HEAD
     console.log("function /PostNewColorString")
     res.send(
         {
@@ -129,17 +124,6 @@ app.get("/PostNewColorString", function (req, res) {
         }
     )
 });
-=======
-        res.send(
-            {
-                "command": "display/add",
-                "animType": "static",
-                "animData": PostedColorstring,
-                "loop": false
-            }
-        )
-    });
->>>>>>> ClearTheApi
 
 function range(start, end) {
     var ans = [];
@@ -188,14 +172,8 @@ app.get("/lastTouchedTiles", function (req, res) {
 });
 
 app.post("/colorString", function (req, res) {
-<<<<<<< HEAD
     console.log("function /colorstring")
     PostedColorstring = req.body.animData;
-=======
-    console.log("function started");
-    PostedColorstring = req.body.animData;
-    console.log(PostedColorstring);
->>>>>>> ClearTheApi
     res.send("Done.");
 });
 

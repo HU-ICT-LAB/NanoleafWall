@@ -142,14 +142,9 @@ function getNewColorString() {
       colorProccesoralreadystring(lastColorCode);
     }
   };
-<<<<<<< HEAD
   xhttp.open("GET", "http://nanoleaf.nandhoman.nl/:3000/PostNewColorString", true);
   xhttp.send();
   updateCurrentColorString();
-=======
-  xhttp.open("GET", "http://localhost:3000/PostNewColorString", true);
-  xhttp.send();
->>>>>>> ClearTheApi
 }
 
 setAllWhite();
