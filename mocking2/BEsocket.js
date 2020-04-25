@@ -1,4 +1,3 @@
-
 var lastColorCode = "";
 
 function colorProccesor(dict) {
@@ -125,7 +124,7 @@ function SingleClickEvent(tile) {
     if (this.readyState == 4 && this.status == 200) { }
   };
   var dataTouchedTile = "data=" + tile;
-  xhttp.open("POST", "http://nanoleaf.nandhoman.nl/singleClickEvent", true);
+  xhttp.open("POST", "http://nanoleaf.nandhoman.nl:3000/singleClickEvent", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(dataTouchedTile);
 }
@@ -142,12 +141,12 @@ function getNewColorString() {
       colorProccesoralreadystring(lastColorCode);
     }
   };
-  xhttp.open("GET", "http://nanoleaf.nandhoman.nl/:3000/PostNewColorString", true);
+  xhttp.open("GET", "http://nanoleaf.nandhoman.nl:3000/PostNewColorString", true);
   xhttp.send();
   updateCurrentColorString();
 }
 
 setAllWhite();
 updateCurrentColorString();
-
+  
 setInterval(getNewColorString, 200);
