@@ -21,17 +21,9 @@ app.use(express.urlencoded());
 app.use(express.json());
 
 
-function authkey() {
-    var key = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    sessionkey = key;
-    console.log(sessionkey);
-    return key;
-}
-
 function generatecolorstring() {
     var totalpanels;
     var anidata = totalNumberOfPanels + " ";
-
     for (totalpanels = 1; totalpanels < totalNumberOfPanels + 1; totalpanels++) {
         var role1 = totalpanels.toString() + " ";
         var role2 = "1 "
@@ -44,31 +36,6 @@ function generatecolorstring() {
     }
     return anidata
 }
-
-app.get("/authkey", function (req, res) {
-    res.send(authkey())
-});
-
-app.get("/Startbutton", function (req, res) {
-    res.send(
-        {
-            "command": "display/add",
-            "animType": "static",
-            "animData": generatecolorstring().toString(),
-            "loop": false
-        }
-
-    )
-});
-
-app.get("/level1", function (req, res) {
-    res.send({
-        "command": "display/add",
-        "animType": "static",
-        "animData": firstSetMoles(),
-        "loop": false
-    });
-});
 
 function random(scope) {
     return Math.floor(Math.random() * scope).toString();
@@ -92,9 +59,7 @@ function firstSetMoles() {
     for (TimesMoleParTime = 1; TimesMoleParTime < 4; TimesMoleParTime++) {
         var TempTileNumber = Math.floor(Math.random() * totalNumberOfPanels);
         var OldTileRed = TempTileNumber + " 1 105 0 0 0 200";
-        console.log(OldTileRed);
         var MakeTileGreen = TempTileNumber + " 1 0 255 0 0 200";
-        console.log(MakeTileGreen);
         anidata = anidata.toString();
         anidata = anidata.replace(OldTileRed, MakeTileGreen);
     }
@@ -102,25 +67,19 @@ function firstSetMoles() {
 }
 
 app.post("/levelContinuation", function (request, res) {
+    console.log("function /levelContinuation")
     var touchedTile = request.body.data;
     var oldColors = request.body.colorstring;
-
     var numberOfTouchedTile = touchedTile.replace("tile", "");
     var TouchedTileData = numberOfTouchedTile + " 1 105 0 0 0 200";
     var NewTouchedTileData = numberOfTouchedTile + " 1 0 255 0 0 200";
     var oldColors = oldColors.toString();
     var newColor = oldColors.replace(NewTouchedTileData, TouchedTileData);
-
     //make new tile
     var NewTile = random(102);
     var NewTouchableTileGreen = NewTile + " 1 0 255 0 0 200";
     var NewTouchableTileRed = NewTile + " 1 105 0 0 0 200";
     var newColor = newColor.replace(NewTouchableTileRed, NewTouchableTileGreen);
-
-    console.log("1" + NewTouchedTileData);
-    console.log("2" + TouchedTileData);
-    console.log(newColor);
-    console.log(oldColors);
     res.send({
         "command": "display/add",
         "animType": "static",
@@ -133,33 +92,44 @@ app.post("/levelContinuation", function (request, res) {
 var ColorstringFromFE;
 var ClickedTileArray = ["000"];
 var PostedColorstring;
+<<<<<<< HEAD
+=======
 
+>>>>>>> ClearTheApi
 app.post("/currentColorStringFormFE", function (request, res) {
-    console.log(request.body)
     ColorstringFromFE = request.body.colorstring;
-    console.log(ColorstringFromFE)
     res.send("done")
 });
 
 app.post("/singleClickEvent", function (request, res) {
-    console.log("djkal");
+    console.log("function /singleClickEvent")
     var touchedTile = request.body.data;
     res.send("Single Click Event Transmitted");
-    console.log(touchedTile);
+
     touchedTile = touchedTile.replace("tile", "");
-    console.log(touchedTile);
+
     if (ClickedTileArray[0] == "000") {
         ClickedTileArray[0] = touchedTile;
-        console.log(ClickedTileArray);
     }
     else {
         ClickedTileArray.push(touchedTile);
-        console.log(ClickedTileArray);
     }
 });
 
 
 app.get("/PostNewColorString", function (req, res) {
+<<<<<<< HEAD
+    console.log("function /PostNewColorString")
+    res.send(
+        {
+            "command": "display/add",
+            "animType": "static",
+            "animData": PostedColorstring,
+            "loop": false
+        }
+    )
+});
+=======
         res.send(
             {
                 "command": "display/add",
@@ -169,6 +139,7 @@ app.get("/PostNewColorString", function (req, res) {
             }
         )
     });
+>>>>>>> ClearTheApi
 
 function range(start, end) {
     var ans = [];
@@ -180,6 +151,7 @@ function range(start, end) {
 
 // Offical Endpoints
 app.get("/currentColorString", function (req, res) {
+    console.log("function /currentColorString")
     res.send(
         {
             "command": "display/add",
@@ -191,11 +163,12 @@ app.get("/currentColorString", function (req, res) {
 });
 
 app.get("/lastTouchedTiles", function (req, res) {
+    console.log("function /lastTouchedTiles")
     var TileNumbers;
     console.log(ClickedTileArray);
     if (ClickedTileArray.length == 1) {
         var tempTileName = ClickedTileArray[0];
-        var ArrayOfEvents = [{ "gesture": 0, "panelId": tempTileName}];
+        var ArrayOfEvents = [{ "gesture": 0, "panelId": tempTileName }];
     }
     else {
         var tempTileName = ClickedTileArray[0].toString();
@@ -205,6 +178,7 @@ app.get("/lastTouchedTiles", function (req, res) {
             ArrayOfEvents.push(SmallTouchDict);
         }
     }
+    
     res.send(
         {
             "events": ArrayOfEvents
@@ -214,9 +188,14 @@ app.get("/lastTouchedTiles", function (req, res) {
 });
 
 app.post("/colorString", function (req, res) {
+<<<<<<< HEAD
+    console.log("function /colorstring")
+    PostedColorstring = req.body.animData;
+=======
     console.log("function started");
     PostedColorstring = req.body.animData;
     console.log(PostedColorstring);
+>>>>>>> ClearTheApi
     res.send("Done.");
 });
 
