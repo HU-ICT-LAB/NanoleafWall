@@ -40,52 +40,6 @@ const watchHCSR04 = () => {
  
 watchHCSR04();
  
-// Trigger a distance measurement once per second
-setInterval(() => {
-  trigger.trigger(10, 1); // Set trigger high for 10 microseconds
-}, 1000);
-
-function Realible(min, max, distance){
-    if(distance < max & distance > min){
-        storedDistance == distance;
-    };
-    return storedDistance
-}; 
-
-function mountingHeight(realmountingHeight, distance){
-    if(realmountingHeight = null){
-        console.log("Mountingheight is not defined")
-    }
-    else{
-    realdistance = mountingHeight - distance
-    }
-    return realdistance
-}
-
-app.get("/raw", function(req, res) {
-  const watchHCSR042 = () => {
-    let startTick;
-   
-    echo.on('alert', (level, tick) => {
-      if (level == 1) {
-        startTick = tick;
-      } else {
-        const endTick = tick;
-        const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
-        return res.json(diff / 2 / MICROSECDONDS_PER_CM);
-      }
-    });
-  };
-   
-  watchHCSR042();
-});
-
-app.get("/settings", function(req, res) {
-    minlenperson = req.body.minlenperson,
-    maxlenperson = req.body.maxlenperson,
-    realmountingHeight = req.body.mountingHeight
-});
-
 app.get("/distance", function(req, res) {
     res.json(distance);
 });
