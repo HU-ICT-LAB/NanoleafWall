@@ -22,16 +22,16 @@ def Send_module(color_array):
   requests.post(link_colorstring, data = myobj)
 
 def begin_playline():
-  return (36)
+  return (37)
 
 def end_playline():
-  return (60)
+  return (61)
 
 def row_lines(begin_row, end_row, r, g, b):
   for column in range(6):
-    begin_line = int(begin_row) + (1 + int(column))
+    begin_line = int(begin_row) + (1 * int(column))
     color_data1 = str(begin_line) + " " + "1 " + r + " " + g + " " + b + " 0 200"
-    end_line = int(end_row) + (1 + int(column))
+    end_line = int(end_row) + (1 * int(column))
     color_data2 = str(end_line) + " " + "1 " + r + " " + g + " " + b + " 0 200"
     color_array[begin_line] = color_data1
     color_array[end_line] = color_data2
