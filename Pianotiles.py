@@ -36,26 +36,38 @@ def row_lines(begin_row, end_row, r, g, b):
     color_array[begin_line] = color_data1
     color_array[end_line] = color_data2
     print(color_array)
-    Send_module(color_array)  
+  Send_module(color_array)  
 
 def random_column():
   return random.randint(1, 6)
 
-def moving_column(column, r, g, b):
+def moving_column(column, r, g, b , pr, pg, pb):
   for row in range(11):
-    panel = int(column) + (6 * int(row))
+    panel_pianotile = int(column) + (6 * int(row))
     time.sleep(t)
-    color_data = str(panel) + " " + "1 " + r + " " + g + " " + b + " 0 200"
-    color_array[panel] = color_data
+    color_data_pianotile = str(panel_pianotile) + " " + "1 " + r + " " + g + " " + b + " 0 200"
+    color_array[panel_pianotile] = color_data_pianotile
+    panel_bg = int(column) + (6 * (int(row)-1 ))
+    color_data_bg = str(panel_bg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
+    color_array[panel_bg] = color_data_bg
     print(color_array)
     Send_module(color_array)
-
+    if row == 7:
+      row_lines(begin_playline(), end_playline(), "156", "112", "7")
+  panel_bg = int(column) + (6 * int(9))
+  color_data_bg = str(panel_bg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
+  color_array[panel_bg] = color_data_bg
+  print(color_array)
+  Send_module(color_array)
+  time.sleep(t)
+  row_lines(begin_playline(), end_playline(), "156", "112", "7")
 
 
 background("100", "100", "200")
 Send_module(color_array)
 row_lines(begin_playline(), end_playline(), "156", "112", "7")
-moving_column(random_column(), "255", "0", "0") 
+moving_column(random_column(), "255", "0", "0", "100", "100", "200") 
+
 
 
 #x = requests.get('http://nanoleaf.nandhoman.nl:3000/lastTouchedTiles')
