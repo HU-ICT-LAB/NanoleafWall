@@ -36,7 +36,7 @@ def row_lines(begin_row, end_row, r, g, b):
     color_array[begin_line] = color_data1
     color_array[end_line] = color_data2
     print(color_array)
-  Send_module(color_array)  
+  Send_module(color_array)
 
 def random_column():
   return random.randint(1, 6)
@@ -63,9 +63,11 @@ def moving_column(column, r, g, b , pr, pg, pb):
   row_lines(begin_playline(), end_playline(), "156", "112", "7")
 
 
+
 background("100", "100", "200")
 Send_module(color_array)
 row_lines(begin_playline(), end_playline(), "156", "112", "7")
+
 moving_column(random_column(), "255", "0", "0", "100", "100", "200") 
 
 
@@ -206,3 +208,4 @@ moving_column(random_column(), "255", "0", "0", "100", "100", "200")
 
 # time.sleep(t)
 # print(game.text)
+
