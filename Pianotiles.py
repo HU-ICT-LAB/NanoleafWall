@@ -1,10 +1,14 @@
 import requests
 import time
 import random
+import json
 
-t = .5
+t = .3
 color_array = []
+touchable_tiles = [43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
+score = 0
 link_colorstring = 'http://nanoleaf.nandhoman.nl:3000/ColorString'
+
 
 def background(r, g, b):
   for id in range(102):
@@ -35,7 +39,7 @@ def row_lines(begin_row, end_row, r, g, b):
     color_data2 = str(end_line) + " " + "1 " + r + " " + g + " " + b + " 0 200"
     color_array[begin_line] = color_data1
     color_array[end_line] = color_data2
-    print(color_array)
+    #print(color_array)
   Send_module(color_array)  
 
 def random_column():
@@ -50,29 +54,53 @@ def moving_column(column, r, g, b , pr, pg, pb):
     panel_bg = int(column) + (6 * (int(row)-1 ))
     color_data_bg = str(panel_bg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
     color_array[panel_bg] = color_data_bg
-    print(color_array)
+    #print(color_array)
     Send_module(color_array)
     if row == 7:
       row_lines(begin_playline(), end_playline(), "156", "112", "7")
+    print("this is it")
+    print(panel_pianotile)
+    x = requests.get('http://nanoleaf.nandhoman.nl:3000/lastTouchedTiles')
+    test = x.text
+    print("pos is below")
+    print(test[35:37])
+    print(x.text)
+    if test[35:37] == str(panel_pianotile):
+      if (int(panel_pianotile) in touchable_tiles):
+       score =+ 1
+       print(score)
+       panel_pg = int(panel_pianotile)
+       color_data_pg = str(panel_bg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
+       color_array[panel_pg] = color_data_pg
+       Send_module(color_array)
+       row_lines(begin_playline(), end_playline(), "156", "112", "7")
+       break
+    print("Am I in loop?")
+  print("still in loop?")
+  row_lines(begin_playline(), end_playline(), "156", "112", "7")
   panel_bg = int(column) + (6 * int(9))
   color_data_bg = str(panel_bg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
   color_array[panel_bg] = color_data_bg
-  print(color_array)
+  #print(color_array)
   Send_module(color_array)
   time.sleep(t)
   row_lines(begin_playline(), end_playline(), "156", "112", "7")
+  print("test")
 
 
 background("100", "100", "200")
 Send_module(color_array)
 row_lines(begin_playline(), end_playline(), "156", "112", "7")
-moving_column(random_column(), "255", "0", "0", "100", "100", "200") 
+moving_column(random_column(), "255", "0", "0", "100", "100", "200")
 
 
 
-#x = requests.get('http://nanoleaf.nandhoman.nl:3000/lastTouchedTiles')
 
-#print(x.text)
+
+
+
+
+
 
 
 #url = 'http://nanoleaf.nandhoman.nl:3000/ColorString'
