@@ -61,8 +61,6 @@ def moving_column(column, r, g, b , pr, pg, pb):
     color_data_bg = str(panel_bg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
     color_array[panel_bg] = color_data_bg
 
-    Send_module(color_array)
-
     # Clickbaar maken
     print("current color is")
     print(panel_pianotile)
@@ -70,8 +68,8 @@ def moving_column(column, r, g, b , pr, pg, pb):
     test = x.text
     print("clicked color is")
     print(test[35:37])
-    if test[35:37] == str(panel_pianotile):
-      if (int(panel_pianotile) in touchable_tiles):
+    if test[35:37] == str(panel_pianotile - 6):
+      if (int(panel_pianotile - 6) in touchable_tiles):
        panel_pg = int(panel_pianotile)
        color_data_pg = str(panel_pg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
        color_array[panel_pg] = color_data_pg
@@ -81,7 +79,7 @@ def moving_column(column, r, g, b , pr, pg, pb):
        print(score)
       break
     
-    
+    Send_module(color_array)
     # score board laten zien 
     
    
