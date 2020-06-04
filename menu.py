@@ -106,6 +106,113 @@ def player_count_select_view1():
   Send_module(color_array)
   return "done"
 
+def search_for_nearest_value(value, list, direction):
+  if direction == "Up":
+    nearest_number_found = False
+    while nearest_number_found == False:
+      value_exist = list.count(value)
+      if value_exist == 1:
+        return value
+      value += 1
+  if direction == "Down":
+    nearest_number_found = False
+    while nearest_number_found == False:
+      value_exist = list.count(value)
+      if value_exist == 1:
+        return value
+      value -= 1
+
+def find_column_number(tileID):
+  found = False
+  UpBorderTile2 = [1, 2, 3, 4, 5, 6]
+  while found == False:
+    if UpBorderTile2.count(tileID) == 1:
+      return tileID
+    else:
+      tileID -= 6
+
+def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, AccentColorRed, AccentColorGreen, AccentColorBlue):
+  # variables
+  tilesTilLeftEnd = []
+  tilesTilRightEnd = []
+  tilesTilUpEnd = []
+  tilesTilDownEnd = []
+  LeftBorderTile = []
+  RightBorderTile = []
+  UpBorderTile = [1]
+  DownBorderTile = [97]
+  length_of_to_Left_list = 0
+  length_of_to_Right_list = 0
+  length_of_to_Up_list = 0
+  length_of_to_Down_list = 0
+  # calculate wich tiles
+  for num in range(17):
+    tile = 1 + 6 * num
+    LeftBorderTile.append(tile)
+  for num in range(17):
+    tile = 6 + 6 * num
+    RightBorderTile.append(tile)
+  tile = 1
+  for num in range(5):
+    tile += 1
+    UpBorderTile.append(tile)
+  tile = 97
+  for num in range(5):
+    tile += 1
+    DownBorderTile.append(tile)
+  # ** tiles til Left
+  border = search_for_nearest_value(midTile, LeftBorderTile, "Down")
+  tilesTilLeftEnd = list(range(border, midTile))
+  tilesTilLeftEnd.reverse()
+  # ** tiles til Right
+  border = search_for_nearest_value(midTile, RightBorderTile, "Up")
+  tilesTilRightEnd = list(range((midTile + 1), (border + 1)))
+  # tiles til Up
+  tile = midTile
+  column_number = find_column_number(midTile)
+  while tile is not column_number:
+    tile -= 6
+    tilesTilUpEnd.append(tile)
+  # tiles til down
+  tile = midTile
+  column_number = find_column_number(midTile) + 96
+  while tile is not column_number:
+    tile += 6
+    tilesTilDownEnd.append(tile)
+  # calc lengths
+  length_of_to_Left_list = len(tilesTilRightEnd)
+  length_of_to_Right_list = len(tilesTilLeftEnd)
+  length_of_to_Up_list = len(tilesTilUpEnd)
+  length_of_to_Down_list = len(tilesTilDownEnd)
+  print(length_of_to_Down_list)
+  # run program
+  first_part_of_animation_busy = True
+  loop_number = 0
+  while first_part_of_animation_busy:
+    if length_of_to_Left_list > (loop_number - 1):
+      tileID = tilesTilLeftEnd[loop_number]
+      toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
+      print(tileID)
+      color_array[tileID] = toAppend
+    if length_of_to_Right_list > (loop_number - 1):
+      tileID = tilesTilRightEnd[loop_number]
+      toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
+      color_array[tileID] = toAppend
+    if length_of_to_Up_list > (loop_number - 1):
+      tileID = tilesTilUpEnd[loop_number]
+      toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
+      color_array[tileID] = toAppend
+    if length_of_to_Down_list > loop_number:
+      tileID = tilesTilDownEnd[loop_number]
+      toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
+      color_array[tileID] = toAppend
+    loop_number += 1
+    Send_module(color_array)
+
+  print(tilesTilRightEnd)
+  print(tilesTilLeftEnd)
+  print(tilesTilDownEnd)
+  print(tilesTilUpEnd)
 
 def main():
   background("230", "230", "200")
@@ -129,16 +236,19 @@ def main():
     RightOneTouchedG = touchComparison(['62', '65', '80', '83'], touchInput)
     if len(RightOneTouchedG) > 0:
       touchedTheWriteOne = True
-  if RightOneTouchedG == ['62']:
-    print("62")
-  if RightOneTouchedG == ['65']:
-    print("65")
-  if RightOneTouchedG == ['80']:
-    print("80")
-  if RightOneTouchedG == ['83']:
-    print("83")
+  # if RightOneTouchedG == ['62']:
+  #   print("62")
+  # if RightOneTouchedG == ['65']:
+  #   print("65")
+  # if RightOneTouchedG == ['80']:
+  #   print("80")
+  # if RightOneTouchedG == ['83']:
+  #   print("83")
+  radialWaveAnimation(RightOneTouchedG, "1", "1", "1", "1", "1", "1")
 
 main()
+# print(search_for_nearest_value(6, [1, 2, 5, 19], "Down"))
+# print(find_column_number(5))
 
 
 
