@@ -36,26 +36,26 @@ def Send_module(color_array):
 
 def tilelistener():
   touchtile = requests.get(link_touchtile)
-  print(1)
+  # print(1)
   status_code = 200
   if touchtile.status_code == 200:
     touchdata = touchtile.text
-    print(2)
+    # print(2)
   else:
     status_code = 100
     while status_code != 200:
       touchtile = requests.get(link_touchtile)
-      print(3)
+      # print(3)
       if touchtile.status_code == 200:
         status_code = 200
-        print(4)
+        # print(4)
         touchdata = touchtile.text
-        print(5)
+        # print(5)
   return touchdata
 
 def init_text(string):
   newstring = string.replace("{\"events\":[{","").replace("}]}","")
-  print(newstring)
+  # print(newstring)
   array = newstring.split(",")
   datarray = []
   for every in array:
@@ -120,7 +120,7 @@ def search_for_nearest_value(value, list, direction):
       value_exist = list.count(value)
       if value_exist == 1:
         return value
-      value -= 1
+      value = value - 1
 
 def find_column_number(tileID):
   found = False
@@ -180,25 +180,28 @@ def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, Ac
     tile += 6
     tilesTilDownEnd.append(tile)
   # calc lengths
-  length_of_to_Left_list = len(tilesTilRightEnd)
-  length_of_to_Right_list = len(tilesTilLeftEnd)
+  length_of_to_Left_list = len(tilesTilLeftEnd)
+  length_of_to_Right_list = len(tilesTilRightEnd)
   length_of_to_Up_list = len(tilesTilUpEnd)
   length_of_to_Down_list = len(tilesTilDownEnd)
-  print(length_of_to_Down_list)
+  # print(length_of_to_Down_list)
   # run program
   first_part_of_animation_busy = True
   loop_number = 0
   while first_part_of_animation_busy:
-    if length_of_to_Left_list > (loop_number - 1):
+    print(tilesTilLeftEnd)
+    print(length_of_to_Left_list)
+    print(loop_number)
+    if length_of_to_Left_list > (loop_number):
       tileID = tilesTilLeftEnd[loop_number]
       toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
-      print(tileID)
+      # print(tileID)
       color_array[tileID] = toAppend
-    if length_of_to_Right_list > (loop_number - 1):
+    if length_of_to_Right_list > (loop_number):
       tileID = tilesTilRightEnd[loop_number]
       toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
       color_array[tileID] = toAppend
-    if length_of_to_Up_list > (loop_number - 1):
+    if length_of_to_Up_list > (loop_number):
       tileID = tilesTilUpEnd[loop_number]
       toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
       color_array[tileID] = toAppend
@@ -206,13 +209,11 @@ def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, Ac
       tileID = tilesTilDownEnd[loop_number]
       toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
       color_array[tileID] = toAppend
+    if length_of_to_Left_list < (loop_number) and length_of_to_Right_list < (loop_number) and length_of_to_Up_list < (loop_number) and length_of_to_Down_list < loop_number:
+      first_part_of_animation_busy = False
     loop_number += 1
     Send_module(color_array)
-
-  print(tilesTilRightEnd)
-  print(tilesTilLeftEnd)
-  print(tilesTilDownEnd)
-  print(tilesTilUpEnd)
+  
 
 def main():
   background("230", "230", "200")
@@ -221,7 +222,7 @@ def main():
   touchedTheWriteOne = False
   while touchedTheWriteOne == False:
     touchInput = init_text(tilelistener())
-    print(touchInput)
+    # print(touchInput)
     RightOneTouchedP = touchComparison(['15', '33', '40', '58', '63', '70'], touchInput)
     if len(RightOneTouchedP) > 0:
       touchedTheWriteOne = True
@@ -232,7 +233,7 @@ def main():
   touchedTheWriteOne = False
   while touchedTheWriteOne == False:
     touchInput = init_text(tilelistener())
-    print(touchInput)
+    # print(touchInput)
     RightOneTouchedG = touchComparison(['62', '65', '80', '83'], touchInput)
     if len(RightOneTouchedG) > 0:
       touchedTheWriteOne = True
@@ -244,7 +245,7 @@ def main():
   #   print("80")
   # if RightOneTouchedG == ['83']:
   #   print("83")
-  radialWaveAnimation(RightOneTouchedG, "1", "1", "1", "1", "1", "1")
+  radialWaveAnimation(int(RightOneTouchedG[0]), "1", "1", "1", "1", "1", "1")
 
 main()
 # print(search_for_nearest_value(6, [1, 2, 5, 19], "Down"))
