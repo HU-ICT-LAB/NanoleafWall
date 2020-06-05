@@ -16,11 +16,21 @@ def background(r, g, b):
 def background2(r, g, b):
   for id in range(102):
     toAppend = str((id + 1)) + " " + "1 " + r + " " + g + " " + b + " 0 200"
-    color_array[id] = toAppend
+    color_array[id - 1] = toAppend
     for row in range(17):
       idnum = 6 * row
       if id == idnum:
         time.sleep(0.1)
+        Send_module(color_array)
+  return "done"
+
+def background3(r, g, b):
+  for id in range(102):
+    toAppend = str((id + 1)) + " " + "1 " + r + " " + g + " " + b + " 0 200"
+    color_array[id - 1] = toAppend
+    for row in range(17):
+      idnum = 6 * row
+      if id == idnum:
         Send_module(color_array)
   return "done"
 
@@ -131,6 +141,17 @@ def find_column_number(tileID):
     else:
       tileID -= 6
 
+def find_row_number(tileID):
+  found = False
+  row_number = 1
+  UpBorderTile2 = [1, 2, 3, 4, 5, 6]
+  while found == False:
+    if UpBorderTile2.count(tileID) == 1:
+      return row_number
+    else:
+      row_number += 1
+      tileID -= 6
+
 def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, AccentColorRed, AccentColorGreen, AccentColorBlue):
   # variables
   tilesTilLeftEnd = []
@@ -184,7 +205,6 @@ def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, Ac
   length_of_to_Right_list = len(tilesTilRightEnd)
   length_of_to_Up_list = len(tilesTilUpEnd)
   length_of_to_Down_list = len(tilesTilDownEnd)
-  # print(length_of_to_Down_list)
   # run program
   first_part_of_animation_busy = True
   loop_number = 0
@@ -195,7 +215,6 @@ def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, Ac
     if length_of_to_Left_list > (loop_number):
       tileID = tilesTilLeftEnd[loop_number]
       toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
-      # print(tileID)
       color_array[tileID] = toAppend
     if length_of_to_Right_list > (loop_number):
       tileID = tilesTilRightEnd[loop_number]
@@ -212,6 +231,36 @@ def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, Ac
     if length_of_to_Left_list < (loop_number) and length_of_to_Right_list < (loop_number) and length_of_to_Up_list < (loop_number) and length_of_to_Down_list < loop_number:
       first_part_of_animation_busy = False
     loop_number += 1
+    Send_module(color_array)
+  # ending anitmation
+  animation_is_done = False
+  animation_row_to_up = (find_row_number(midTile))
+  animation_row_to_down = (find_row_number(midTile))
+  print(animation_row_to_up)
+  is_done = 0
+  while animation_is_done == False:
+    UpBorderTile2 = [1, 2, 3, 4, 5, 6]
+    if animation_row_to_down < 17:
+      for num in UpBorderTile2:
+        tileID = (animation_row_to_down * 6) + num
+        toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
+        print("tileid: " +toAppend)
+        color_array[tileID - 1] = toAppend
+        print(color_array)
+    if animation_row_to_up > 0:
+      for num in UpBorderTile2:
+        tileID = ((animation_row_to_up + 1) * 6) + num
+        toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
+        color_array[tileID - 1] = toAppend
+        print(animation_row_to_up)
+    if animation_row_to_up == 0:
+      is_done += 1 
+    if animation_row_to_down > 17:
+      is_done += 1
+    if is_done == 2:
+      animation_is_done = True
+    animation_row_to_up -= 1
+    animation_row_to_down += 1
     Send_module(color_array)
   
 
@@ -237,17 +286,11 @@ def main():
     RightOneTouchedG = touchComparison(['62', '65', '80', '83'], touchInput)
     if len(RightOneTouchedG) > 0:
       touchedTheWriteOne = True
-  # if RightOneTouchedG == ['62']:
-  #   print("62")
-  # if RightOneTouchedG == ['65']:
-  #   print("65")
-  # if RightOneTouchedG == ['80']:
-  #   print("80")
-  # if RightOneTouchedG == ['83']:
-  #   print("83")
-  radialWaveAnimation(int(RightOneTouchedG[0]), "1", "1", "1", "1", "1", "1")
+  radialWaveAnimation(int(RightOneTouchedG[0]), "100", "150", "150", "1", "1", "1")
+  background3("100", "150", "150")
 
 main()
+# print(find_row_number(4))
 # print(search_for_nearest_value(6, [1, 2, 5, 19], "Down"))
 # print(find_column_number(5))
 
