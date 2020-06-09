@@ -1,10 +1,8 @@
 import requests
 import time
 import random
-import json
 
 t = .3
-p = 0
 color_array = []
 touchable_tiles = [43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
 score = 0
@@ -40,17 +38,18 @@ def row_lines(begin_row, end_row, r, g, b):
     color_data2 = str(end_line) + " " + "1 " + r + " " + g + " " + b + " 0 200"
     color_array[begin_line] = color_data1
     color_array[end_line] = color_data2
-    #print(color_array)
+
   Send_module(color_array)  
 
 def random_column():
   return random.randint(1, 6)
 
+
 def moving_column(column, r, g, b , pr, pg, pb):
   for row in range(11):
     panel_pianotile = int(column) + (6 * int(row))
     time.sleep(t)
-
+    
     # Bovenste en onderste lijn opnieuw tekenen
     row_lines(begin_playline(), end_playline(), "156", "112", "7")
 
@@ -60,6 +59,7 @@ def moving_column(column, r, g, b , pr, pg, pb):
     panel_bg = int(column) + (6 * (int(row)-1 ))
     color_data_bg = str(panel_bg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
     color_array[panel_bg] = color_data_bg
+
 
     # Clickbaar maken
     print("current color is")
