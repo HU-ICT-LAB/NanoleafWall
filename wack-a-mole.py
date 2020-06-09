@@ -40,18 +40,21 @@ def Generate_mole(r, g, b , pr, pg, pb , br, bg, bb):
 
   time.sleep(t)
 
-  #  blue mol clickbaar maken
+  #clicked panels ophalen
   x = requests.get('http://nanoleaf.nandhoman.nl:3000/lastTouchedTiles')
   test = x.text
   print("clicked panel is")
+
+  #  blue mol clickbaar maken
   print(test)
   print("Blue mole is")
   print(blue_mole)
+
   if str(blue_mole) in test:
     clicked_mole = int(blue_mole)
     color_data_bg = str(clicked_mole) + " " + "1 " + br + " " + bg + " " + bb + " 0 200"
     color_array[clicked_mole] = color_data_bg
-    # score bijhouden
+    # blue_score bijhouden
     blue_score =+ 1
     print("blue score is")
     print(blue_score)
@@ -62,11 +65,12 @@ def Generate_mole(r, g, b , pr, pg, pb , br, bg, bb):
   #  red mol clickbaar maken
   print("Red mole is")
   print(red_mole)
+
   if str(red_mole) in test:
     clicked_mole = int(red_mole)
     color_data_bg = str(clicked_mole) + " " + "1 " + br + " " + bg + " " + bb + " 0 200"
     color_array[clicked_mole] = color_data_bg
-    # score bijhouden
+    # red_score bijhouden
     red_score =+ 1
     print("red score is")
     print(red_score)
