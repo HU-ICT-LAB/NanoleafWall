@@ -1,18 +1,22 @@
+# imports
 import requests
 import time
 import random
 
+# global variables
 t = .5
 color_array = []
 link_colorstring = 'http://nanoleaf.nandhoman.nl:3000/ColorString'
 link_touchtile =  'http://nanoleaf.nandhoman.nl:3000/lastTouchedTiles'
 
+# Function to define to whole colorstring, always start whit this function
 def background(r, g, b):
   for id in range(102):
     toAppend = str((id + 1)) + " " + "1 " + r + " " + g + " " + b + " 0 200"
     color_array.append(toAppend)
   return "done"
 
+# Function defines a new one-color-background, when there is already an background
 def background2(r, g, b):
   for id in range(102):
     toAppend = str((id + 1)) + " " + "1 " + r + " " + g + " " + b + " 0 200"
@@ -24,6 +28,7 @@ def background2(r, g, b):
         Send_module(color_array)
   return "done"
 
+
 def background3(r, g, b):
   for id in range(102):
     toAppend = str((id + 1)) + " " + "1 " + r + " " + g + " " + b + " 0 200"
@@ -33,6 +38,9 @@ def background3(r, g, b):
       if id == idnum:
         Send_module(color_array)
   return "done"
+
+
+# Makes it easy to send the colordata to mocking server
 
 def Send_module(color_array):
   colorstring = "102"
@@ -44,6 +52,8 @@ def Send_module(color_array):
   "loop": False}
   requests.post(link_colorstring, data = myobj)
 
+
+# Opens a stream that takes all touch input
 def tilelistener():
   touchtile = requests.get(link_touchtile)
   # print(1)
@@ -63,7 +73,8 @@ def tilelistener():
         # print(5)
   return touchdata
 
-def init_text(string):
+# Proces the touchdata to compare it later in a function
+def init_touchtext(string):
   newstring = string.replace("{\"events\":[{","").replace("}]}","")
   # print(newstring)
   array = newstring.split(",")
@@ -74,6 +85,7 @@ def init_text(string):
       datarray.append(newevery)
   return datarray
 
+# Compare if the right tile is clicked
 def touchComparison(wanted, input):
   equal = []
   for every in wanted:
@@ -82,6 +94,7 @@ def touchComparison(wanted, input):
         equal.append(every)
   return equal
 
+# defined a specific view of the menu, frame to select the number of players
 def game_select_view1():
   toAppend = str(62) + " " + "1 " + "255" + " " + "16" + " " + "16" + " 0 200"
   color_array[62] = toAppend
@@ -100,6 +113,7 @@ def game_select_view1():
   Send_module(color_array)
   return "done"
 
+# defined a specific view of the menu, frame to select the number of players
 def player_count_select_view1():
   toAppend = str(15) + " " + "1 " + "245" + " " + "223" + " " + "26" + " 0 200"
   color_array[15] = toAppend
@@ -116,6 +130,7 @@ def player_count_select_view1():
   Send_module(color_array)
   return "done"
 
+# A function used to find the border
 def search_for_nearest_value(value, list, direction):
   if direction == "Up":
     nearest_number_found = False
@@ -132,6 +147,7 @@ def search_for_nearest_value(value, list, direction):
         return value
       value = value - 1
 
+# a function that makes it easy to find a column number by giving the tileID
 def find_column_number(tileID):
   found = False
   UpBorderTile2 = [1, 2, 3, 4, 5, 6]
@@ -140,6 +156,7 @@ def find_column_number(tileID):
       return tileID
     else:
       tileID -= 6
+
 
 def find_row_number(tileID):
   found = False
@@ -152,6 +169,7 @@ def find_row_number(tileID):
       row_number += 1
       tileID -= 6
 
+#a addation to make it more beautifull
 def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, AccentColorRed, AccentColorGreen, AccentColorBlue):
   # variables
   tilesTilLeftEnd = []
@@ -181,11 +199,11 @@ def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, Ac
   for num in range(5):
     tile += 1
     DownBorderTile.append(tile)
-  # ** tiles til Left
+  # tiles til Left
   border = search_for_nearest_value(midTile, LeftBorderTile, "Down")
   tilesTilLeftEnd = list(range(border, midTile))
   tilesTilLeftEnd.reverse()
-  # ** tiles til Right
+  # tiles til Right
   border = search_for_nearest_value(midTile, RightBorderTile, "Up")
   tilesTilRightEnd = list(range((midTile + 1), (border + 1)))
   # tiles til Up
@@ -263,15 +281,14 @@ def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, Ac
     animation_row_to_down += 1
     Send_module(color_array)
   
-
+#the main code, it runs automaticly, this indentation level is made to shorten the code. When you're coding in this file you could hide this part.
 def main():
   background("230", "230", "200")
   Send_module(color_array)
   player_count_select_view1()
   touchedTheWriteOne = False
   while touchedTheWriteOne == False:
-    touchInput = init_text(tilelistener())
-    # print(touchInput)
+    touchInput = init_touchtext(tilelistener())
     RightOneTouchedP = touchComparison(['15', '33', '40', '58', '63', '70'], touchInput)
     if len(RightOneTouchedP) > 0:
       touchedTheWriteOne = True
@@ -281,8 +298,7 @@ def main():
   game_select_view1()
   touchedTheWriteOne = False
   while touchedTheWriteOne == False:
-    touchInput = init_text(tilelistener())
-    # print(touchInput)
+    touchInput = init_touchtext(tilelistener())
     RightOneTouchedG = touchComparison(['62', '65', '80', '83'], touchInput)
     if len(RightOneTouchedG) > 0:
       touchedTheWriteOne = True
@@ -290,9 +306,6 @@ def main():
   background3("100", "150", "150")
 
 main()
-# print(find_row_number(4))
-# print(search_for_nearest_value(6, [1, 2, 5, 19], "Down"))
-# print(find_column_number(5))
 
 
 
