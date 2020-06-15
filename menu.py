@@ -28,7 +28,6 @@ def background2(r, g, b):
         Send_module(color_array)
   return "done"
 
-
 def background3(r, g, b):
   for id in range(102):
     toAppend = str((id + 1)) + " " + "1 " + r + " " + g + " " + b + " 0 200"
@@ -39,9 +38,7 @@ def background3(r, g, b):
         Send_module(color_array)
   return "done"
 
-
 # Makes it easy to send the colordata to mocking server
-
 def Send_module(color_array):
   colorstring = "102"
   for id in color_array:
@@ -51,7 +48,6 @@ def Send_module(color_array):
   "animData": colorstring,
   "loop": False}
   requests.post(link_colorstring, data = myobj)
-
 
 # Opens a stream that takes all touch input
 def tilelistener():
@@ -132,6 +128,7 @@ def player_count_select_view1():
 
 # A function used to find the border
 def search_for_nearest_value(value, list, direction):
+  value = int(value)
   if direction == "Up":
     nearest_number_found = False
     while nearest_number_found == False:
@@ -146,40 +143,38 @@ def search_for_nearest_value(value, list, direction):
       if value_exist == 1:
         return value
       value = value - 1
-
 # a function that makes it easy to find a column number by giving the tileID
 def find_column_number(tileID):
   found = False
-  UpBorderTile2 = [1, 2, 3, 4, 5, 6]
+  up_border_tile2 = [1, 2, 3, 4, 5, 6]
   while found == False:
-    if UpBorderTile2.count(tileID) == 1:
+    if up_border_tile2.count(tileID) == 1:
       return tileID
     else:
       tileID -= 6
 
-
 def find_row_number(tileID):
   found = False
   row_number = 1
-  UpBorderTile2 = [1, 2, 3, 4, 5, 6]
+  up_border_tile2 = [1, 2, 3, 4, 5, 6]
   while found == False:
-    if UpBorderTile2.count(tileID) == 1:
+    if up_border_tile2.count(tileID) == 1:
       return row_number
     else:
       row_number += 1
       tileID -= 6
 
 #a addation to make it more beautifull
-def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, AccentColorRed, AccentColorGreen, AccentColorBlue):
+def radial_Wave_Animation(midTile, MainColorRed, MainColorGreen, MainColorBlue, AccentColorRed, AccentColorGreen, AccentColorBlue):
   # variables
-  tilesTilLeftEnd = []
-  tilesTilRightEnd = []
-  tilesTilUpEnd = []
-  tilesTilDownEnd = []
-  LeftBorderTile = []
-  RightBorderTile = []
-  UpBorderTile = [1]
-  DownBorderTile = [97]
+  tiles_Til_Left_End = []
+  tiles_Til_Right_End = []
+  tiles_Til_Up_End = []
+  tiles_Til_Down_End = []
+  Left_Border_Tile = []
+  Right_Border_Tile = []
+  Up_Border_Tile = [1]
+  Down_Border_Tile = [97]
   length_of_to_Left_list = 0
   length_of_to_Right_list = 0
   length_of_to_Up_list = 0
@@ -187,63 +182,63 @@ def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, Ac
   # calculate wich tiles
   for num in range(17):
     tile = 1 + 6 * num
-    LeftBorderTile.append(tile)
+    Left_Border_Tile.append(tile)
   for num in range(17):
     tile = 6 + 6 * num
-    RightBorderTile.append(tile)
+    Right_Border_Tile.append(tile)
   tile = 1
   for num in range(5):
     tile += 1
-    UpBorderTile.append(tile)
+    Up_Border_Tile.append(tile)
   tile = 97
   for num in range(5):
     tile += 1
-    DownBorderTile.append(tile)
+    Down_Border_Tile.append(tile)
   # tiles til Left
-  border = search_for_nearest_value(midTile, LeftBorderTile, "Down")
-  tilesTilLeftEnd = list(range(border, midTile))
-  tilesTilLeftEnd.reverse()
+  border = search_for_nearest_value(midTile, Left_Border_Tile, "Down")
+  tiles_Til_Left_End = list(range(border, midTile))
+  tiles_Til_Left_End.reverse()
   # tiles til Right
-  border = search_for_nearest_value(midTile, RightBorderTile, "Up")
-  tilesTilRightEnd = list(range((midTile + 1), (border + 1)))
+  border = search_for_nearest_value(midTile, Right_Border_Tile, "Up")
+  tiles_Til_Right_End = list(range((midTile + 1), (border + 1)))
   # tiles til Up
   tile = midTile
   column_number = find_column_number(midTile)
   while tile is not column_number:
     tile -= 6
-    tilesTilUpEnd.append(tile)
+    tiles_Til_Up_End.append(tile)
   # tiles til down
   tile = midTile
   column_number = find_column_number(midTile) + 96
   while tile is not column_number:
     tile += 6
-    tilesTilDownEnd.append(tile)
+    tiles_Til_Down_End.append(tile)
   # calc lengths
-  length_of_to_Left_list = len(tilesTilLeftEnd)
-  length_of_to_Right_list = len(tilesTilRightEnd)
-  length_of_to_Up_list = len(tilesTilUpEnd)
-  length_of_to_Down_list = len(tilesTilDownEnd)
+  length_of_to_Left_list = len(tiles_Til_Left_End)
+  length_of_to_Right_list = len(tiles_Til_Right_End)
+  length_of_to_Up_list = len(tiles_Til_Up_End)
+  length_of_to_Down_list = len(tiles_Til_Down_End)
   # run program
   first_part_of_animation_busy = True
   loop_number = 0
   while first_part_of_animation_busy:
-    print(tilesTilLeftEnd)
+    print(tiles_Til_Left_End)
     print(length_of_to_Left_list)
     print(loop_number)
     if length_of_to_Left_list > (loop_number):
-      tileID = tilesTilLeftEnd[loop_number]
+      tileID = tiles_Til_Left_End[loop_number]
       toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
       color_array[tileID] = toAppend
     if length_of_to_Right_list > (loop_number):
-      tileID = tilesTilRightEnd[loop_number]
+      tileID = tiles_Til_Right_End[loop_number]
       toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
       color_array[tileID] = toAppend
     if length_of_to_Up_list > (loop_number):
-      tileID = tilesTilUpEnd[loop_number]
+      tileID = tiles_Til_Up_End[loop_number]
       toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
       color_array[tileID] = toAppend
     if length_of_to_Down_list > loop_number:
-      tileID = tilesTilDownEnd[loop_number]
+      tileID = tiles_Til_Down_End[loop_number]
       toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
       color_array[tileID] = toAppend
     if length_of_to_Left_list < (loop_number) and length_of_to_Right_list < (loop_number) and length_of_to_Up_list < (loop_number) and length_of_to_Down_list < loop_number:
@@ -257,16 +252,16 @@ def radialWaveAnimation(midTile, MainColorRed, MainColorGreen, MainColorBlue, Ac
   print(animation_row_to_up)
   is_done = 0
   while animation_is_done == False:
-    UpBorderTile2 = [1, 2, 3, 4, 5, 6]
+    up_border_tile2 = [1, 2, 3, 4, 5, 6]
     if animation_row_to_down < 17:
-      for num in UpBorderTile2:
+      for num in up_border_tile2:
         tileID = (animation_row_to_down * 6) + num
         toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
         print("tileid: " +toAppend)
         color_array[tileID - 1] = toAppend
         print(color_array)
     if animation_row_to_up > 0:
-      for num in UpBorderTile2:
+      for num in up_border_tile2:
         tileID = ((animation_row_to_up + 1) * 6) + num
         toAppend = str(tileID) + " " + "1 " + MainColorRed + " " + MainColorGreen + " " + MainColorBlue + " 0 200"
         color_array[tileID - 1] = toAppend
@@ -302,10 +297,11 @@ def main():
     RightOneTouchedG = touchComparison(['62', '65', '80', '83'], touchInput)
     if len(RightOneTouchedG) > 0:
       touchedTheWriteOne = True
-  radialWaveAnimation(int(RightOneTouchedG[0]), "100", "150", "150", "1", "1", "1")
+  radial_Wave_Animation(int(RightOneTouchedG[0]), "100", "150", "150", "1", "1", "1")
   background3("100", "150", "150")
 
 main()
+
 
 
 
