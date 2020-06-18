@@ -45,7 +45,7 @@ def random_column():
   return random.randint(1, 6)
 
 
-def moving_column(column, r, g, b , pr, pg, pb):
+def moving_column(tijd, column, turn, r, g, b , pr, pg, pb):
   for row in range(11):
     panel_pianotile = int(column) + (6 * int(row))
     time.sleep(t)
@@ -74,7 +74,7 @@ def moving_column(column, r, g, b , pr, pg, pb):
        color_data_pg = str(panel_pg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
        color_array[panel_pg] = color_data_pg
        # score bijhouden
-       score =+ 1
+       score += 1
        print("score is")
        print(score)
       break
@@ -92,5 +92,5 @@ background("100", "100", "200")
 Send_module(color_array)
 row_lines(begin_playline(), end_playline(), "156", "112", "7")
 for x in range(100):
-  moving_column(random_column(), "255", "0", "0", "100", "100", "200")
+  moving_column(x, random_column(), 3, "255", "0", "0", "100", "100", "200")
 
