@@ -2,20 +2,22 @@ import requests
 import time
 import random
 
+# t is de time voor sleep.
 t = .3
 color_array = []
 touchable_tiles = [43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
 score = 0
 link_colorstring = 'http://nanoleaf.nandhoman.nl:3000/ColorString'
-
+nanoleafs = 102
+nanostring = "102"
 
 def background(r, g, b):
-  for id in range(102):
+  for id in range(nanoleafs):
     toAppend = str((id + 1)) + " " + "1 " + r + " " + g + " " + b + " 0 200"
     color_array.append(toAppend)
 
 def Send_module(color_array):
-  colorstring = "102"
+  colorstring = nanostring
   for id in color_array:
     colorstring += " " + id
   myobj = {"command": "display",
@@ -48,9 +50,11 @@ def random_column():
 def moving_column(tijd, column, turn, r, g, b , pr, pg, pb):
   for row in range(11):
     panel_pianotile = int(column) + (6 * int(row))
+
+    # het functie sleept hier zodat de vallende tile niet te snel gaat.
     time.sleep(t)
     
-    # Bovenste en onderste lijn opnieuw tekenen
+    # Bovenste en onderste lijn opnieuw tekenen.
     row_lines(begin_playline(), end_playline(), "156", "112", "7")
 
 
@@ -60,8 +64,11 @@ def moving_column(tijd, column, turn, r, g, b , pr, pg, pb):
     color_data_bg = str(panel_bg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
     color_array[panel_bg] = color_data_bg
 
+    if row == 7:
+      row_lines(begin_playline(), end_playline(), "156", "112", "7")
 
-    # Clickbaar maken
+
+    # Clickbaar maken.
     print("current color is")
     print(panel_pianotile)
     x = requests.get('http://nanoleaf.nandhoman.nl:3000/lastTouchedTiles')
@@ -73,14 +80,16 @@ def moving_column(tijd, column, turn, r, g, b , pr, pg, pb):
        panel_pg = int(panel_pianotile)
        color_data_pg = str(panel_pg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
        color_array[panel_pg] = color_data_pg
-       # score bijhouden
-       score += 1
+
+       # score bijhouden.
+       score =+ 1
        print("score is")
        print(score)
+
+       # functie stoppen.
       break
     
     Send_module(color_array)
-    # score board laten zien 
     
    
   
@@ -91,6 +100,6 @@ def moving_column(tijd, column, turn, r, g, b , pr, pg, pb):
 background("100", "100", "200")
 Send_module(color_array)
 row_lines(begin_playline(), end_playline(), "156", "112", "7")
-for x in range(100):
+for x in range(60):
   moving_column(x, random_column(), 3, "255", "0", "0", "100", "100", "200")
 
