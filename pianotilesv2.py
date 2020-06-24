@@ -3,9 +3,9 @@ import time
 import random
 
 # t is de time voor sleep.
-t = .3
+t = .2
 color_array = []
-touchable_tiles = [43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
+touchable_tiles = [49, 50, 51, 52, 53, 54]
 score = 0
 link_colorstring = 'http://nanoleaf.nandhoman.nl:3000/ColorString'
 nanoleafs = 102
@@ -27,10 +27,10 @@ def Send_module(color_array):
   requests.post(link_colorstring, data = myobj)
 
 def begin_playline():
-  return (37)
+  return (43)
 
 def end_playline():
-  return (61)
+  return (55)
 
 def row_lines(begin_row, end_row, r, g, b):
   for column in range(6):
@@ -44,11 +44,11 @@ def row_lines(begin_row, end_row, r, g, b):
   Send_module(color_array)  
 
 def random_column():
-  return random.randint(1, 6)
+  return random.randint(37, 42)
 
 
 def moving_column(tijd, column, turn, r, g, b , pr, pg, pb):
-  for row in range(11):
+  for row in range(4):
     panel_pianotile = int(column) + (6 * int(row))
 
     # het functie sleept hier zodat de vallende tile niet te snel gaat.
@@ -64,7 +64,7 @@ def moving_column(tijd, column, turn, r, g, b , pr, pg, pb):
     color_data_bg = str(panel_bg) + " " + "1 " + pr + " " + pg + " " + pb + " 0 200"
     color_array[panel_bg] = color_data_bg
 
-    if row == 7:
+    if row == 2:
       row_lines(begin_playline(), end_playline(), "156", "112", "7")
 
 
